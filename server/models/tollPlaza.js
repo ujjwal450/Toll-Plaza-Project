@@ -16,7 +16,7 @@ const TollPlaza = sequelize.define("TollPlaza", {
     allowNull: false,
   },
   nhNo: {
-    type: Sequelize.INTEGER(100),
+    type: Sequelize.STRING(300),
     allowNull: false,
   },
   state: {

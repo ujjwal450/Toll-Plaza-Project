@@ -58,7 +58,7 @@ const UserForm = (props) => {
         >
           <label>First Name</label>
           <input
-            type="test"
+            type="text"
             value={firstName}
             onChange={firstNameChangeHandler}
             required
@@ -69,7 +69,7 @@ const UserForm = (props) => {
         >
           <label>Last Name</label>
           <input
-            type="test"
+            type="text"
             value={lastName}
             onChange={lastNameChangeHandler}
             required
@@ -148,7 +148,6 @@ const UserForm = (props) => {
         </div>
       </form>
       {props.signupError && <div>Unable to create Account</div>}
-      {props.createUserError && <div>Unable to create User</div>}
     </Card>
     
   )

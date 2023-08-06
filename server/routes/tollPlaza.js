@@ -14,7 +14,7 @@ router.post("/createTollPlaza", auth, async (req, res) => {
     console.log(req.body)
     const tollPlaza = await TollPlaza.create(req.body)
     console.log(tollPlaza)
-    res.send(tollPlaza)
+    res.status(201).send(tollPlaza)
   } catch (error) {
     res.send(error)
   }
@@ -47,6 +47,7 @@ router.patch("/tollPlazas/:id", auth, async (req, res) => {
       "nhNo",
       "state",
       "section",
+      "price"
     ];
   const isValidOperation = updates.every((update) =>
           allowedUpdates.includes(update)
@@ -101,9 +102,10 @@ router.delete("/tollPlazas/:id", auth, async (req, res) => {
   }
 
 })
-router.get("/payToll/:userId/:tollPlazaId", auth, async (req, res) => {
+router.get("/payToll/:tollPlazaId", auth, async (req, res) => {
   try {
     console.log(req.body)
+
     const tollPlaza = await TollPlaza.findOne({ where: { id: req.params.tollPlazaId } });
     console.log(tollPlaza)
     let x = String(Math.floor((Math.random() * 1000000000) + 1));
@@ -119,7 +121,7 @@ router.get("/payToll/:userId/:tollPlazaId", auth, async (req, res) => {
       createdAt:'2011-03-13 02:53:50',
       updatedAt: '2011-03-13 02:53:50',
       paymentId: payment.id,
-      userId: req.params.userId,
+      userId: req.user.id,
       
     }, type: QueryTypes.INSERT })
     console.log(users_payments)
@@ -132,7 +134,8 @@ router.get("/payToll/:userId/:tollPlazaId", auth, async (req, res) => {
 router.get("/showPaymentDetails", auth, async (req, res) => {
   try {
     console.log('test')
-    const payments = await sequelize.query("SELECT `users`.`firstName`, `users`.`lastName`, `users`.`email`, `users`.`vehicleId`,`payments`.`price`, `payments`.`tollPlazaName`, `payments`.`transactionID` FROM `users` JOIN `users_payments` on `users`.`id` = `users_payments`.`userId` JOIN `payments` on `payments`.`id` = `users_payments`.`payment_id`", { type: QueryTypes.SELECT })
+    const userId = req.user.id
+    const payments = await sequelize.query("SELECT `users`.`firstName`, `users`.`lastName`, `users`.`email`, `users`.`vehicleId`,`payments`.`price`, `payments`.`tollPlazaName`, `payments`.`transactionID` FROM `users` JOIN `users_payments` on `users`.`id` = `users_payments`.`userId` JOIN `payments` on `payments`.`id` = `users_payments`.`payment_id` where `users`.`id` = ?", {  replacements: [userId],type: QueryTypes.SELECT })
     res.send(payments)
   } catch (error) {
     res.send(error)

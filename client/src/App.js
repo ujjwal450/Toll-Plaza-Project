@@ -47,6 +47,7 @@ function App() {
         localStorage.setItem('token', data.token)
         localStorage.setItem('username', data.username)
         localStorage.setItem('accountType', data.role)
+        localStorage.setItem('accountId', data.id)
       }
       else{
         throw new Error("User Not Registered")

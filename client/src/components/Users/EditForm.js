@@ -43,11 +43,27 @@ const EditForm =(props)=>{
       }
     })
   }
+  const setVehicleTypeValue = (e)=> {
+    setFormValues((prevState) => {
+      return{
+        ...prevState,
+        vehicleType: e.target.value
+      }
+    })
+  }
+  const setVehicleIdValue = (e)=> {
+    setFormValues((prevState) => {
+      return{
+        ...prevState,
+        vehicleId: e.target.value
+      }
+    })
+  }
   const setMobileNoValue = (e)=> {
     setFormValues((prevState) => {
       return{
         ...prevState,
-        mobileNo: e.target.value
+        phoneNo: e.target.value
       }
     })
   }
@@ -83,7 +99,15 @@ const EditForm =(props)=>{
       </div>
       <div className={classes.control}>
       <label htmlFor="">Mobile No</label>
-      <input type="text" value={formValues.mobileNo} onChange={setMobileNoValue}/>
+      <input type="text" value={formValues.phoneNo} onChange={setMobileNoValue}/>
+      </div>
+      <div className={classes.control}>
+      <label htmlFor="">Vehicle Type</label>
+      <input type="text" value={formValues.vehicleType} onChange={setVehicleTypeValue}/>
+      </div>
+      <div className={classes.control}>
+      <label htmlFor="">Vehicle Id</label>
+      <input type="text" value={formValues.vehicleId} onChange={setVehicleIdValue}/>
       </div>
       <div className={classes.control}>
       <label htmlFor="">Password</label>
